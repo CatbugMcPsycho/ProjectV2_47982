@@ -17,62 +17,56 @@ void Menu();
 int getN();
 void def(int);
 void instruct();        //Instructions
-void game(char[]);            //Function to hold game
-void cCLR(char[],int,int);
+void game();            //Function to hold game
 //Execution Starts here
 int main(int argc, char** argv) {
     //Declare variables
-    const int PLR=2;
-    const int COLOR=4;
-    char cCode[PLR][COLOR];
     int inN;
     do{
             Menu();
             inN=getN();
             switch(inN){
             case 1: instruct();break;
-            case 2:{
-                cCLR(cCode,PLR,COLOR)
-                game();break;
-            }
+            case 2: game();break;
             default:   def(inN);}
         }while(inN<3);
         return 0;
     return 0;
 }
-void cCLR(char c[],int r, int k){
+void game(){
+    const int PLR=2;
+    const int COLOR=4;
+    char cCode[PLR][COLOR],
+         win='n';
     srand(time(0));
-    int clrnum;
-    for(int i=0;i<k+1;i++){
+    int clrnum,
+        turns=0;
+    for(int i=0;i<4;i++){
 	clrnum=(rand()%5)+1;//Random number 0 to 5
 
 	switch(clrnum){//Changes numbers into colors
             case 1:{
-               c[0][i]='R';//Red
+               cCode[0][i]='R';//Red
                break;
             }
             case 2:{
-               c[0][i]='B';//Blue
+               cCode[0][i]='B';//Blue
                break;
             }
             case 3:{
-               c[0][i]='Y';//Yellow
+               cCode[0][i]='Y';//Yellow
                break;
             }
             case 4:{
-               c[0][i]='P';//Purple
+               cCode[0][i]='P';//Purple
                break;
             }
             case 5:{
-               c[0][i]='G';//Green
+               cCode[0][i]='G';//Green
                break;
             }
         }         
     }
-}
-void game(char c[]){
-    char win='n';
-    int turns=0;
     while(turns!=10){//Turn limit is 10, stops there
         turns++;
         cout<<"Colors to pick from: Blue, Green, Yellow, Purple, and Red."<<endl;
@@ -81,20 +75,20 @@ void game(char c[]){
 
             for(int i=0;i<4;i++){//User enter 4 colors
                     cout<<"Color"<<i<<": "; 
-                    cin>>c[1][i];
+                    cin>>cCode[1][i];
                     cout<<endl;
             }
 
             for(int i=0;i<4;i++){//Checks if any are right color and position
-                if(c[1][i]==c[0][i]){
+                if(cCode[1][i]==cCode[0][i]){
                     cout<<"R"<<" ";
                 }
                 else{
-                    if((c[1][i]==c[0][0]|| //Checks if any are the right color
-                        c[1][i]==c[0][1]||
-                        c[1][i]==c[0][2]||
-                        c[1][i]==c[0][3])&&
-                        c[1][i]!=c[0][i]){
+                    if((cCode[1][i]==cCode[0][0]|| //Checks if any are the right color
+                        cCode[1][i]==cCode[0][1]||
+                        cCode[1][i]==cCode[0][2]||
+                        cCode[1][i]==cCode[0][3])&&
+                        cCode[1][i]!=cCode[0][i]){
                         cout<<"W"<<" ";
                     }
                     
@@ -102,10 +96,10 @@ void game(char c[]){
             }
             
             cout <<endl<<endl;
-            if(c[1][0]==c[0][0]&&//Confirms if all of the colors are right
-               c[1][1]==c[0][1]&&
-               c[1][2]==c[0][2]&&
-               c[1][3]==c[0][3]){
+            if(cCode[1][0]==cCode[0][0]&&//Confirms if all of the colors are right
+               cCode[1][1]==cCode[0][1]&&
+               cCode[1][2]==cCode[0][2]&&
+               cCode[1][3]==cCode[0][3]){
                 cout<<"You win! Number of tries: "<<turns<<endl;
                 win='y';//Too make sure lose doesn't print
                 turns=10;
